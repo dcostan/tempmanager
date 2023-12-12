@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network charts
+QT += core gui network charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = tempmanager
 TEMPLATE = app
 
-LIBS += -lcnpy -lz
+LIBS += -L/usr/local/lib -lcnpy -lz
 
 CONFIG += C++11
 # The following define makes your compiler emit warnings if you use
@@ -19,6 +19,8 @@ CONFIG += C++11
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+
+QMAKE_CXXFLAGS = -Wno-unused-parameter -Wno-unused-result
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
