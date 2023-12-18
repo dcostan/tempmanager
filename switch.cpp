@@ -1,12 +1,12 @@
 #include "switch.h"
 
 Switch::Switch(QWidget *parent) : QAbstractButton(parent),
-_switch(false),
-_opacity(0.000),
-_height(28),
-_margin(6),
-_thumb("#d5d5d5"),
-_anim(new QPropertyAnimation(this, "offset", this))
+    _switch(false),
+    _opacity(0.000),
+    _height(28),
+    _margin(6),
+    _thumb("#d5d5d5"),
+    _anim(new QPropertyAnimation(this, "offset", this))
 {
     setOffset(_height / 2);
     _y = _height / 2;
@@ -14,12 +14,12 @@ _anim(new QPropertyAnimation(this, "offset", this))
 }
 
 Switch::Switch(const QBrush &brush, QWidget *parent) : QAbstractButton(parent),
-_switch(false),
-_opacity(0.000),
-_height(28),
-_margin(6),
-_thumb("#d5d5d5"),
-_anim(new QPropertyAnimation(this, "offset", this))
+    _switch(false),
+    _opacity(0.000),
+    _height(28),
+    _margin(6),
+    _thumb("#d5d5d5"),
+    _anim(new QPropertyAnimation(this, "offset", this))
 {
     setOffset(_height / 2);
     _y = _height / 2;

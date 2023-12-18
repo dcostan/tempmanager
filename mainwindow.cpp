@@ -88,33 +88,33 @@ MainWindow::~MainWindow()
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-  if (event->type() ==  QEvent::MouseButtonPress && !m_event) {
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+    if (event->type() ==  QEvent::MouseButtonPress && !m_event) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
-    QPoint origLocation = mouseEvent->pos();
+        QPoint origLocation = mouseEvent->pos();
 
-    double newx = 480 - ( origLocation.y() * (1.6) );
-    double newy = ( origLocation.x() * (0.7442) ) - 10;
+        double newx = 480 - ( origLocation.y() * (1.6) );
+        double newy = ( origLocation.x() * (0.7442) ) - 10;
 
-    qDebug() << "x: " << newx << "    y: " << newy;
+        qDebug() << "x: " << newx << "    y: " << newy;
 
-    QPoint newPoint( (unsigned int)newx, (unsigned int)newy );
+        QPoint newPoint( (unsigned int)newx, (unsigned int)newy );
 
-    m_event = true;
+        m_event = true;
 
-    QMouseEvent * e1 = new QMouseEvent(QEvent::MouseButtonPress, newPoint, Qt::MouseButton::LeftButton, Qt::MouseButton::LeftButton, Qt::KeyboardModifier::NoModifier);
-    QCoreApplication::postEvent(obj, e1);
-    QMouseEvent * e2 = new QMouseEvent(QEvent::MouseButtonRelease, newPoint, Qt::MouseButton::LeftButton, Qt::MouseButton::LeftButton, Qt::KeyboardModifier::NoModifier);
-    QCoreApplication::postEvent(obj, e2);
+        QMouseEvent * e1 = new QMouseEvent(QEvent::MouseButtonPress, newPoint, Qt::MouseButton::LeftButton, Qt::MouseButton::LeftButton, Qt::KeyboardModifier::NoModifier);
+        QCoreApplication::postEvent(obj, e1);
+        QMouseEvent * e2 = new QMouseEvent(QEvent::MouseButtonRelease, newPoint, Qt::MouseButton::LeftButton, Qt::MouseButton::LeftButton, Qt::KeyboardModifier::NoModifier);
+        QCoreApplication::postEvent(obj, e2);
 
-    return true;
-  } else if (event->type() ==  QEvent::MouseButtonPress && m_event) {
-      nextClick->start(10);
-      return QObject::eventFilter(obj, event);
-  } else {
-    // standard event processing
-    return QObject::eventFilter(obj, event);
-  }
+        return true;
+    } else if (event->type() ==  QEvent::MouseButtonPress && m_event) {
+        nextClick->start(10);
+        return QObject::eventFilter(obj, event);
+    } else {
+        // standard event processing
+        return QObject::eventFilter(obj, event);
+    }
 }
 
 void MainWindow::setEventFalse()
@@ -190,7 +190,7 @@ void MainWindow::updateData()
             ui->fire->setVisible(false);
     }
     //if(!data["active"].toInt())
-        ui->tempLabel->setStyleSheet("color: #90ffc6; font: 60pt; qproperty-alignment: AlignCenter;");
+    ui->tempLabel->setStyleSheet("color: #90ffc6; font: 60pt; qproperty-alignment: AlignCenter;");
     /*else if(data["night"].toInt())
         ui->tempLabel->setStyleSheet("color: #0000ff; font: 60pt; qproperty-alignment: AlignCenter;");
     else
@@ -234,7 +234,8 @@ void MainWindow::updateData()
 
     // Rete
     connect ( netProcess, SIGNAL( finished(int) ), this, SLOT( setNetStatus(int) ));
-    netProcess->start("checkwlan");
+    netProcess->setProgram("checkwlan");
+    netProcess->start();
 
     // Dati JSON
     QJsonObject data = getJsonData();
@@ -438,7 +439,8 @@ void MainWindow::updaterClicked()
     ui->stackedWidget->setCurrentIndex(3);
     QProcess * const updateProcess = new QProcess();
     connect ( updateProcess, SIGNAL( finished(int) ), this, SLOT( updateFinished(int) ));
-    updateProcess->start("system-updater");
+    updateProcess->setProgram("system-updater");
+    updateProcess->start();
 }
 
 void MainWindow::updateFinished(int exitCode)
@@ -483,22 +485,22 @@ void MainWindow::updateFinished(int exitCode)
 
 double MainWindow::getPressure(unsigned int i)
 {
-	try
-	{
-            cnpy::NpyArray arr = cnpy::npy_load("/mnt/ramdisk/pressure.npy");
+    try
+    {
+        cnpy::NpyArray arr = cnpy::npy_load("/mnt/ramdisk/pressure.npy");
 
-            double* pressure_data = arr.data<double>();
+        double* pressure_data = arr.data<double>();
 
-            if(arr.shape[0] <= i)
-                return -1;
-
-            return pressure_data[i];
-	}
-	catch (std::runtime_error &e)
-	{
-            qWarning() << "Caught a runtime_error exception: " << e.what () << '\n';
+        if(arr.shape[0] <= i)
             return -1;
-	}
+
+        return pressure_data[i];
+    }
+    catch (std::runtime_error &e)
+    {
+        qWarning() << "Caught a runtime_error exception: " << e.what () << '\n';
+        return -1;
+    }
 }
 
 void MainWindow::connectToNetwork()
@@ -518,33 +520,33 @@ void MainWindow::setNetStatus(int exitCode)
         if(exitCode == 2)
             ui->networkButton->setStyleSheet("background-image: url(:/lock.png); \
                                              background-repeat: repeat-n;       \
-                                             background-position: center;       \
-                                             border-width:1px;                  \
-                                             border-radius:20px;                \
-                                             max-width:80px;                    \
-                                             max-height:80px;                   \
-                                             min-width:80px;                    \
-                                             min-height:80px;");
+                    background-position: center;       \
+        border-width:1px;                  \
+        border-radius:20px;                \
+        max-width:80px;                    \
+        max-height:80px;                   \
+        min-width:80px;                    \
+        min-height:80px;");
         else if(exitCode == 1)
             ui->networkButton->setStyleSheet("background-image: url(:/net.png); \
                                              background-repeat: repeat-n;       \
-                                             background-position: center;       \
-                                             border-width:1px;                  \
-                                             border-radius:20px;                \
-                                             max-width:80px;                    \
-                                             max-height:80px;                   \
-                                             min-width:80px;                    \
-                                             min-height:80px;");
+                    background-position: center;       \
+        border-width:1px;                  \
+        border-radius:20px;                \
+        max-width:80px;                    \
+        max-height:80px;                   \
+        min-width:80px;                    \
+        min-height:80px;");
         else
-            ui->networkButton->setStyleSheet("background-image: url(:/nonet.png); \
-                                             background-repeat: repeat-n;       \
-                                             background-position: center;       \
-                                             border-width:1px;                  \
-                                             border-radius:20px;                \
-                                             max-width:80px;                    \
-                                             max-height:80px;                   \
-                                             min-width:80px;                    \
-                                             min-height:80px;");
+        ui->networkButton->setStyleSheet("background-image: url(:/nonet.png); \
+                                         background-repeat: repeat-n;       \
+                background-position: center;       \
+        border-width:1px;                  \
+        border-radius:20px;                \
+        max-width:80px;                    \
+        max-height:80px;                   \
+        min-width:80px;                    \
+        min-height:80px;");
     }
 
 }
