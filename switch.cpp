@@ -80,7 +80,7 @@ void Switch::setChecked(bool state)  {
     }
 }
 
-void Switch::enterEvent(QEvent *e) {
+void Switch::enterEvent(QEnterEvent *e) {
     setCursor(Qt::PointingHandCursor);
     QAbstractButton::enterEvent(e);
 }

@@ -136,7 +136,7 @@ void MainWindow::updateTime()
 
     //  Data
     QDate date = QDate::currentDate();
-    text = date.toString("d MMMM yyyy");
+    text = QLocale{QLocale::Italian}.toString(date, "d MMMM yyyy");
     if(ui->dateLabel->text().indexOf(text) < 0)
     {
         ui->dateLabel->setText(text);
@@ -362,7 +362,7 @@ void MainWindow::pressureClicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
 
-    QtCharts::QLineSeries *series = new QtCharts::QLineSeries();
+    QLineSeries *series = new QLineSeries();
 
     QFile presFile("/mnt/ramdisk/pressure.npy");
     if(presFile.exists())
@@ -378,13 +378,13 @@ void MainWindow::pressureClicked()
             series->append((arr.shape[0] - i) / 15, pressure_data[i]);
     }
 
-    QtCharts::QChart *chart = new QtCharts::QChart();
+    QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->setTitle("Andamento della pressione");
 
-    QtCharts::QChartView *chartView = new QtCharts::QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     QHBoxLayout *chartLayout = new QHBoxLayout;
@@ -519,34 +519,34 @@ void MainWindow::setNetStatus(int exitCode)
 
         if(exitCode == 2)
             ui->networkButton->setStyleSheet("background-image: url(:/lock.png); \
-                                             background-repeat: repeat-n;       \
-                    background-position: center;       \
-        border-width:1px;                  \
-        border-radius:20px;                \
-        max-width:80px;                    \
-        max-height:80px;                   \
-        min-width:80px;                    \
-        min-height:80px;");
+                                              background-repeat: repeat-n;       \
+                                              background-position: center;       \
+                                              border-width:1px;                  \
+                                              border-radius:20px;                \
+                                              max-width:80px;                    \
+                                              max-height:80px;                   \
+                                              min-width:80px;                    \
+                                              min-height:80px;");
         else if(exitCode == 1)
-            ui->networkButton->setStyleSheet("background-image: url(:/net.png); \
-                                             background-repeat: repeat-n;       \
-                    background-position: center;       \
-        border-width:1px;                  \
-        border-radius:20px;                \
-        max-width:80px;                    \
-        max-height:80px;                   \
-        min-width:80px;                    \
-        min-height:80px;");
+            ui->networkButton->setStyleSheet("background-image: url(:/net.png);  \
+                                              background-repeat: repeat-n;       \
+                                              background-position: center;       \
+                                              border-width:1px;                  \
+                                              border-radius:20px;                \
+                                              max-width:80px;                    \
+                                              max-height:80px;                   \
+                                              min-width:80px;                    \
+                                              min-height:80px;");
         else
-        ui->networkButton->setStyleSheet("background-image: url(:/nonet.png); \
-                                         background-repeat: repeat-n;       \
-                background-position: center;       \
-        border-width:1px;                  \
-        border-radius:20px;                \
-        max-width:80px;                    \
-        max-height:80px;                   \
-        min-width:80px;                    \
-        min-height:80px;");
+            ui->networkButton->setStyleSheet("background-image: url(:/nonet.png);\
+                                              background-repeat: repeat-n;       \
+                                              background-position: center;       \
+                                              border-width:1px;                  \
+                                              border-radius:20px;                \
+                                              max-width:80px;                    \
+                                              max-height:80px;                   \
+                                              min-width:80px;                    \
+                                              min-height:80px;");
     }
 
 }
