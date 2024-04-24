@@ -5,14 +5,11 @@ This program is used to manage the room temperature using a Qt GUI and additiona
 A prebuilt script to install all the required software can be found below
 ```bash
 apt update
-apt install python-serial python-numpy libqt5core5a qt5-qmake cmake qtbase5-dev-tools qtbase5-dev libqt5widgets5 cmake php libapache2-mod-php apache2 dirmngr -y
-apt install libqt5charts5 libqt5charts5-dev -y
+apt install python3-serial python3-numpy libqt6core6 qmake6 cmake qt6-base-dev-tools qt6-base-dev libqt6widgets6 libqt6charts6 qt6-charts-dev cmake php libapache2-mod-php apache2 dirmngr -y
 
 wget https://github.com/rogersce/cnpy/archive/master.zip
-unzip cnpy-master.zip
+unzip master.zip
 cd cnpy-master
-cmake
+cmake .
 make install
-
-apt install certbot python-certbot-apache -y --force-yes
 ```
